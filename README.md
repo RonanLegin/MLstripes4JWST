@@ -1,4 +1,4 @@
-# MLstripes
+# MLstripes4JWST
 
 ## Description
 
