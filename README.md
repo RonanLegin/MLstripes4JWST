@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository contains code to train a neural network to remove 1/f striped noise from JWST images. I also provide a set of optimized weights for the model, which can be found under `scripts/weights`. The demo.ipynb file shows how to load the optimized weights and apply the Unet model to predict a clean template of the striped noise, which can then be used to subtract from the base image.
+This repository contains code to train a neural network to remove 1/f striped noise from JWST images. I also provide a set of optimized weights for the model, which can be found under `scripts/weights`. The demo.ipynb file shows how to load the optimized weights and apply the Unet model to predict a clean template of the striped noise, which can then be used to subtract from the original image.
 
 
 ## Getting started
