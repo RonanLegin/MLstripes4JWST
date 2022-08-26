@@ -22,4 +22,4 @@ These packages are used to simulate training data and to perform data augmentati
 
 ## Contact
 
-If you have any questions, you can send me an email at `ronan.legin@umontreal.ca` .
+If you have any questions, feel free to send me an email at `ronan.legin@umontreal.ca` .
