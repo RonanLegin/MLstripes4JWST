@@ -15,7 +15,7 @@ To run demo.ipynb, the following packages along with their dependencies are requ
 
 If you would like to train your own model using the provided scripts, then you also need to install:
 
-- tensorflow_addons: `pip install tensorflow_addons`.
+- tensorflow addons: `pip install tensorflow-addons`.
 - colorednoise: `pip install colorednoise`.
 
 These packages are used to simulate training data and to perform data augmentation.
