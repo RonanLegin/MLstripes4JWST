@@ -18,7 +18,7 @@ If you would like to train your own model using the provided scripts, then you a
 - tensorflow addons: `pip install tensorflow-addons`.
 - colorednoise: `pip install colorednoise`.
 
-These packages are used to simulate training data and to perform data augmentation.
+These additional packages are used to simulate training data and to perform data augmentation.
 
 ## Contact
 
