@@ -14,10 +14,15 @@ To run demo.ipynb, the following packages along with their dependencies are requ
 - jupyter notebook: `pip install notebook`.
 - astropy: `pip install astropy`.
 - tensorflow: `pip install tensorflow`.
-  - If you encounter issues on macOS with the installation of tensorflow, you can instead follow the instructions [here](https://developer.apple.com/metal/tensorflow-plugin/). It basically boils down to the following commands:
+  - If you encounter issues on macOS with the installation of tensorflow, you can instead follow the instructions [here](https://developer.apple.com/metal/tensorflow-plugin/). If you have a Mac with the M1 chip, I would try creating a conda environment and installing all the packages in the following order:
 
     ```
     conda create --name mlstripes python=3.9
+    conda activate mlstripes
+    pip install numpy
+    pip install matplotlib
+    pip install jupyter notebook
+    pip install astropy
     conda install -c apple tensorflow-deps
     python3 -m pip install tensorflow-macos
     ```
