@@ -13,7 +13,7 @@ To run demo.ipynb, the following packages along with their dependencies are requ
 - matplotlib: `pip install matplotlib`.
 - jupyter notebook: `pip install notebook`.
 - tensorflow: `pip install tensorflow`
-  - If you encounter issues on macOS, then you can instead try the following steps:
+  - If you encounter issues on macOS with the installation of tensorflow, you can instead try the following steps:
 
     ```
     conda create --name mlstripes python=3.9
