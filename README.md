@@ -12,7 +12,7 @@ To run demo.ipynb, the following packages along with their dependencies are requ
 - numpy: `pip install numpy`.
 - matplotlib: `pip install matplotlib`.
 - jupyter notebook: `pip install notebook`.
-- tensorflow: `pip install tensorflow`.
+- tensorflow: `pip install tensorflow` or `python3 -m pip install tensorflow-macos` if on macOS.
 - astropy: `pip install astropy`.
 
 If you would like to train your own model using the provided scripts, then you also need to install:
