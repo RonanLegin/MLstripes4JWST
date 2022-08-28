@@ -10,6 +10,7 @@ This repository contains code to train a neural network to remove 1/f striped no
 To run demo.ipynb, the following packages along with their dependencies are required:
 
 - numpy: `pip install numpy`.
+- matplotlib: `pip install matplotlib`.
 - tensorflow: `pip install tensorflow`.
 - astropy: `pip install astropy`.
 
