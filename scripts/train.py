@@ -5,13 +5,16 @@ import tensorflow_addons as tfa
 from unet import Unet
 
 from parameters import stacks, stackwidth, filters_base, kernel_size, kw, learning_rate, batch_size, num_steps, cosmos_npix
-from noise import sample_noise, sample_dead_pixel_mask, sample_circle_mask, sample_cosmic_ray_mask, apply_mask_amp, apply_mask, subtract_mask, add_mask
+from noise import sample_noise, sample_dead_pixel_mask, sample_circle_mask, sample_cosmic_ray_mask, apply_mask_amp, apply_mask, subtract_mask
 from load_cosmos import load_training_data, load_validation_data
 
 import sys
 
+import matplotlib.pyplot as plt 
+
 # Directory where data folder is contained.
 tmp_path = sys.argv[1]
+
 
 # Define the loss function. Here, we use the mean squared error between the true clean image and the one predicted by the network.
 def loss_function(y_true, y_pred):
@@ -37,6 +40,7 @@ def valid_step(x, y_true):
     return loss
 
 
+
 # Perform random transformations to the input and target data to create more diversity in the training data.
 @tf.function
 def augment_data(img):
@@ -58,7 +62,6 @@ def preprocess_batch(src_batch, noise, pink_template):
 
     # Add together clean image and noise
     x_batch = src_batch + noise
-    y_batch = src_batch
 
     # Mask images and replace masked regions with constant amplitude value
     x_batch = apply_mask_amp(x_batch, mask_dp, amp_dp)
@@ -67,28 +70,16 @@ def preprocess_batch(src_batch, noise, pink_template):
 
 
     # Simulate clipping that is applied to real data
-    x_batch = np.clip(x_batch, -1.0, 1.0)
+    x_batch = tf.clip_by_value(x_batch, -1.0, 1.0)
 
-    clip_mask_max = (x_batch < 1.0)
-    clip_mask_min = (x_batch > -1.0)
-
-    # Apply same clipping to the label
-    y_batch = add_mask(y_batch, clip_mask_max)
-    y_batch = subtract_mask(y_batch, clip_mask_min)
-
-    # Mask regions with artifacts in the true label
-    y_batch = subtract_mask(y_batch, mask_dp)
-    y_batch = subtract_mask(y_batch, mask_cr)
-    y_batch = subtract_mask(y_batch, mask_cl)
+    y_batch = pink_template
 
     return x_batch, y_batch
 
 
 
-
-
 # Initialize Unet model 
-model = Unet(stacks, stackwidth, filters_base, kernel_size, save_path='weights_bkgr', **kw)    
+model = Unet(stacks, stackwidth, filters_base, kernel_size, save_path='weights', **kw)    
 
 # Initialize the type of optimizer and learning rate to perform gradient descent. 
 optimizer = tf.keras.optimizers.Adam(learning_rate = learning_rate)
