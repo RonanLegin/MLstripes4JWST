@@ -113,4 +113,17 @@ def apply_mask(img, mask):
     img *= mask
     return img
 
+def add_mask(img, mask):
+    # Apply mask to images
+    img *= mask
+    # Flip the mask regions from 0 to 1
+    img += -(mask - 1.)
+    return img
+
+def subtract_mask(img, mask):
+    # Apply mask to images
+    img *= mask
+    # Flip the mask regions from 0 to 1
+    img += (mask - 1.)
+    return img
 
