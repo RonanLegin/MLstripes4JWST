@@ -65,7 +65,6 @@ def preprocess_batch(src_batch, noise, pink_template):
     x_batch = apply_mask(x_batch, mask_cr)
     x_batch = apply_mask(x_batch, mask_cl)
 
-
     # Simulate clipping that is applied to real data
     x_batch = np.clip(x_batch, -1.0, 1.0)
 
@@ -77,9 +76,9 @@ def preprocess_batch(src_batch, noise, pink_template):
     y_batch = subtract_mask(y_batch, clip_mask_min)
 
     # Mask regions with artifacts in the true label
-    y_batch = subtract_mask(y_batch, mask_dp)
-    y_batch = subtract_mask(y_batch, mask_cr)
-    y_batch = subtract_mask(y_batch, mask_cl)
+    y_batch = apply_mask(y_batch, mask_dp)
+    y_batch = apply_mask(y_batch, mask_cr)
+    y_batch = apply_mask(y_batch, mask_cl)
 
     return x_batch, y_batch
 

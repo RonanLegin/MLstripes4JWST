@@ -81,12 +81,6 @@ def preprocess_batch(src_batch, noise, pink_template):
 
     y_batch = pink_template
 
-    # Mask dead regions in the true templates
-    y_batch = apply_mask(y_batch, mask_dp)
-    y_batch = apply_mask(y_batch, mask_cr)
-    y_batch = apply_mask(y_batch, mask_cl)
-
-
     return x_batch, y_batch
 
 
