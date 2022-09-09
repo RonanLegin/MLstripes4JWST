@@ -61,9 +61,9 @@ def preprocess_batch(src_batch, noise, pink_template):
     y_batch = src_batch
 
     # Mask images and replace masked regions with constant amplitude value
-    x_batch = apply_mask_amp(x_batch, mask_dp, amp_dp)
-    x_batch = apply_mask_amp(x_batch, mask_cr, amp_cr)
-    x_batch = apply_mask_amp(x_batch, mask_cl, amp_cl)
+    x_batch = apply_mask(x_batch, mask_dp)
+    x_batch = apply_mask(x_batch, mask_cr)
+    x_batch = apply_mask(x_batch, mask_cl)
 
 
     # Simulate clipping that is applied to real data
