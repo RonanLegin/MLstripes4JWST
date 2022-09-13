@@ -34,6 +34,10 @@ If you would like to train your own model using the provided scripts, then you a
 
 These additional packages are used to simulate training data and to perform data augmentation.
 
+## Weights
+
+Since the network's weights exceeded the file size limit on Github, I uploaded the weights [here](https://drive.google.com/drive/folders/1m9SHNbJDbocI4unNYFzq2h1m1uFst1JV?usp=sharing). To run demo.ipynb with these weights, simply drag and drop the weights folder in 'scripts'.
+
 ## Contact
 
 If you have any questions, feel free to send me an email at `ronan.legin@umontreal.ca` .
