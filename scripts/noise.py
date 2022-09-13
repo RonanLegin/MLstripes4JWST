@@ -98,6 +98,19 @@ def sample_cosmic_ray_mask(npix, nsamples):
 
     return mask, amp
 
+def sample_large_square_mask(npix, nsamples):
+
+    side = np.random.randint(10, 100)
+    mask = np.ones((nsamples, npix, npix, 1), dtype=np.float32)
+    mask[:,npix//2 - side//2:npix//2 + side//2, npix//2 - side//2:npix//2 + side//2]
+
+    mask = tf.cast(mask, dtype=tf.float32)
+    shift = tf.random.uniform([nsamples,2], minval=-npix//2, maxval=npix//2, dtype=tf.float32)
+    mask = tfa.image.translate(mask, shift, fill_mode='wrap') # Randomly shift images
+    amp = tf.random.uniform([nsamples, 1, 1, 1], -1.0, 0.)
+    
+    return mask, amp
+
 
 # Apply mask to images and replace by constant amplitude
 def apply_mask_amp(img, mask, amp):

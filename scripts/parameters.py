@@ -4,8 +4,8 @@ import tensorflow as tf
 
 ### Unet parameters ###
 
-stacks = 4 # number of downsampling blocks
-stackwidth = 2 # number of convolution layers per block
+stacks = 5 # number of downsampling blocks
+stackwidth = 1 # number of convolution layers per block
 filters_base = 24 # number of kernels convolved per convolution layer
 kernel_size = 7 # size of kernels
 
@@ -17,9 +17,9 @@ kw['padding'] = 'SAME' # type of padding
 ### Training parameters ###
 
 # size of gradient step to update network weights
-learning_rate = 1e-4
+learning_rate = 5e-5
 # number of training examples fed for every weight optimization
-batch_size = 32
+batch_size = 8
 # Total number of optimization steps to train the network
 num_steps = 100000
 

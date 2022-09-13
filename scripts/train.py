@@ -10,7 +10,6 @@ from load_cosmos import load_training_data, load_validation_data
 
 import sys
 
-import matplotlib.pyplot as plt 
 
 # Directory where data folder is contained.
 tmp_path = sys.argv[1]
@@ -46,14 +45,14 @@ def valid_step(x, y_true):
 def augment_data(img):
     shift = tf.random.uniform([batch_size,2], minval=-cosmos_npix, maxval=cosmos_npix, dtype=tf.float32)
     img = tfa.image.translate(img, shift, fill_mode='wrap') # Randomly shift images
-    scale = tf.random.uniform([], 1, 3, dtype=tf.int32) # Randomly resize images
+    scale = tf.random.uniform([], 2, 4, dtype=tf.int32) # Randomly resize images
     img = tf.image.resize(img, tf.cast([img.shape[1]*scale, img.shape[2]*scale], tf.int32))
     return img
 
 
 
 # Applies masks and scales noise before feeding to the neural network
-def preprocess_batch(src_batch, noise, pink_template):
+def preprocess_batch(src_batch, noise, pink_template, sigma=0.1):
 
     # Sample masked regions for dead pixels and cosmic rays
     mask_dp, amp_dp = sample_dead_pixel_mask(src_batch.shape[1], batch_size)
@@ -63,14 +62,14 @@ def preprocess_batch(src_batch, noise, pink_template):
     # Add together clean image and noise
     x_batch = src_batch + noise
 
-    # Mask images and replace masked regions with constant amplitude value
+    # Mask images
     x_batch = apply_mask(x_batch, mask_dp)
     x_batch = apply_mask(x_batch, mask_cr)
     x_batch = apply_mask(x_batch, mask_cl)
 
 
     # Simulate clipping that is applied to real data
-    x_batch = tf.clip_by_value(x_batch, -1.0, 1.0)
+    x_batch = tf.clip_by_value(x_batch, -5*sigma, 5*sigma)
 
     y_batch = pink_template
 
@@ -78,8 +77,10 @@ def preprocess_batch(src_batch, noise, pink_template):
 
 
 
+
 # Initialize Unet model 
 model = Unet(stacks, stackwidth, filters_base, kernel_size, save_path='weights', **kw)    
+model.load_weights(model.save_path + '/weights')
 
 # Initialize the type of optimizer and learning rate to perform gradient descent. 
 optimizer = tf.keras.optimizers.Adam(learning_rate = learning_rate)
@@ -116,6 +117,7 @@ for i in range(0, num_steps):
     src_batch = tf.convert_to_tensor(src_batch, dtype=tf.float32)
     noise = tf.convert_to_tensor(noise, dtype=tf.float32)
 
+    #x_batch, y_batch = preprocess_batch(src_batch, noise, pink_template)
     x_batch, y_batch = preprocess_batch(src_batch, noise, pink_template)
 
     # Perform a training step, which updates the network's weights.
@@ -146,6 +148,7 @@ for i in range(0, num_steps):
                 src_batch = tf.convert_to_tensor(src_batch, dtype=tf.float32)
                 noise = tf.convert_to_tensor(noise, dtype=tf.float32)
 
+                #x_batch, y_batch = preprocess_batch(src_batch, noise, pink_template)
                 x_batch, y_batch = preprocess_batch(src_batch, noise, pink_template)
 
                 # Perform a training step, which updates the network's weights.
