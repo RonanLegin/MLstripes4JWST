@@ -1,4 +1,6 @@
 # MLstripes4JWST
+![Example Image](scripts/results/jw01355009001_02101_00001_nrcblong_rate.png)
+
 
 ## Description
 
